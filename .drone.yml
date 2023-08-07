@@ -1,25 +1,16 @@
 kind: pipeline
 type: docker
-name: nodejs-tests
+name: my-ci-pipeline
 
-# Define the trigger to specify when this pipeline should run.
+# Specify the trigger conditions for the pipeline
 trigger:
-  branch:
-    include:
-      - main  # Change this to the branch you want to trigger the pipeline
+  event:
+    - push
+    - pull_request
 
-# Define the container image with Node.js and other dependencies.
-# Make sure to change the Node.js version as needed.
-platform:
-  os: linux
-  arch: amd64
-image: node:14
-
+# Define the steps to be executed in the pipeline
 steps:
-  - name: install_dependencies
+  - name: build
+    image: node:14  # Specify the Docker image to use for this step
     commands:
-      - npm install
-
-  - name: run_tests
-    commands:
-      - npm test
+      - npm install  # Example build commands
