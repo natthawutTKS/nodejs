@@ -1,16 +1,10 @@
 kind: pipeline
-type: docker
-name: my-ci-pipeline
+type: kubernetes
+name: default
 
-# Specify the trigger conditions for the pipeline
-trigger:
-  event:
-    - push
-    - pull_request
-
-# Define the steps to be executed in the pipeline
 steps:
-  - name: build
-    image: node:14  # Specify the Docker image to use for this step
-    commands:
-      - npm install  # Example build commands
+- name: greeting
+  image: alpine
+  commands:
+  - echo hello
+  - echo world
