@@ -3,8 +3,63 @@ type: kubernetes
 name: default
 
 steps:
-- name: greeting
-  image: alpine
-  commands:
-  - echo hello
-  - echo world
+ setenv:
+        runs-on: ubuntu-20.04
+        steps:
+          - name: Check Tag
+            id: check-tag
+            run: |
+              if [[ $GITHUB_REF_NAME =~ ^v[0-9]+\.[0-9]+\.[0-9]+ ]]; then
+                  echo name=match;
+              else
+                  exit 1;
+              fi
+          - name: Check ENV
+            id: getenv
+            run: |
+              echo "tag_name=${GITHUB_REF_NAME:1}" >> $GITHUB_OUTPUT
+        #   - uses: actions/checkout@v3
+        outputs:
+          tag_name: ${{ steps.getenv.outputs.tag_name }}
+    # analyze:
+    #   runs-on: ubuntu-latest
+    #   needs: setenv
+    #   steps:
+    #     - uses: actions/checkout@v2
+    #       with:
+    #         fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+    #     - name: Set up JDK 17
+    #       uses: actions/setup-java@v1
+    #       with:
+    #         java-version: 17
+    #     - name: Cache SonarQube packages
+    #       uses: actions/cache@v1
+    #       with:
+    #         path: ~/.sonar/cache
+    #         key: ${{ runner.os }}-sonar
+    #         restore-keys: ${{ runner.os }}-sonar
+    #     - name: Cache Maven packages
+    #       uses: actions/cache@v1
+    #       with:
+    #         path: ~/.m2
+    #         key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+    #         restore-keys: ${{ runner.os }}-m2
+    #     - name: Build and analyze
+    #       env:
+    #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+    #         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+    #         SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+    #       run: mvn -B verify -DskipTests org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=#ORG#_#APP_NAME# -Dsonar.projectName='#APP_NAME#'
+    build-container:
+        runs-on: ubuntu-latest
+        # needs: analyze
+        steps:
+        - uses: actions/checkout@master
+        - name: Kaniko build
+          uses: aevea/action-kaniko@master
+          with:
+            image: ${{secrets.registry_team}}/${{secrets.registry_project}}
+            registry: ${{ secrets.registry_endpoint }}
+            username: ${{ secrets.registry_username }}
+            password: ${{ secrets.registry_password }}
+            tag: ${{ needs.setenv.outputs.tag_name }}
