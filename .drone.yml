@@ -11,8 +11,8 @@ steps:
   - name: code-analysis
     image: aosapps/drone-sonar-plugin
     settings:
-        project-key: "test-mix"
-        project-name: "test-mix"
+        project-key: "nodejs"
+        project-name: "nodejs"
         sonar.host.url: "https://sonarqube.tks.trueidc.com/"
         sonar.login: "sqp_2e39c6a0ff4c84d2355d061debeca8b59ccd7244"
 trigger:
