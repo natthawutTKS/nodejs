@@ -1,27 +1,15 @@
 ---
 kind: pipeline
 type: kubernetes
-name: test-on-amd64
-
-platform:
-  arch: amd64
+name: test
 
 steps:
-- name: test
+- name: backend
   image: node
   commands:
   - npm install
 
----
-kind: pipeline
-type: kubernetes
-name: test-on-arm64
-
-platform:
-  arch: arm64
-
-steps:
-- name: test
+- name: frontend
   image: node
   commands:
   - npm install
