@@ -8,8 +8,8 @@ steps:
     image: node:14  # Specify the Docker image to use for this step
     commands:
       - npm install  # Example build commands
-  - name: code-analysis
-    image: aosapps/drone-sonar-plugin
+  - name: perform code-analysis
+    image: kytay/sonar-node-plugin
     settings:
         project-key: "test-mix"
         project-name: "test-mix"
