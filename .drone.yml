@@ -12,7 +12,7 @@ steps:
     image: aosapps/drone-sonar-plugin
     settings:
         sonar_host:
-          from_secret: https://sonarqube.tks.trueidc.com
+          from_secret: "https://sonarqube.tks.trueidc.com"
         sonar_token:
           from_secret: sqp_96384a4bc14d98fb7df2d324be5d601f86fcb461
 trigger:
