@@ -8,7 +8,16 @@ steps:
     image: node:14  # Specify the Docker image to use for this step
     commands:
       - npm install  # Example build commands
-
+  - name: analyze
+    image: sonarsource/sonar-scanner-cli:latest
+    settings:
+      project-key: test-mix
+      project-name: test-mix
+      project-version: 1.0
+      sonar.sources: .
+      sonar.host.url: https://sonarqube.tks.trueidc.com
+      sonar.login:
+        from_secret: sqp_d98c49e17419404d4459278ef092f09ed462f42d
 trigger:
   branch:
   - main
