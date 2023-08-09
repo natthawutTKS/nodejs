@@ -18,6 +18,7 @@ steps:
         sonar.sources: .
         sonar.host.url: "https://sonarqube.tks.trueidc.com"
         sonar.login: "sqp_2e39c6a0ff4c84d2355d061debeca8b59ccd7244"
+        use_node_version: 16.18.1
 trigger:
   branch:
   - main
