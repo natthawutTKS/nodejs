@@ -5,14 +5,14 @@ name: default
 # Define the steps to be executed in the pipeline
 steps:
   - name: build
-    image: node:14  
+    image: node:14
     commands:
-      - npm install  
+      - npm install
   - name: sonarqube
     image: sonarsource/sonar-scanner-cli:latest
     environment:
       SONAR_HOST_URL: https://sonarqube.tks.trueidc.com
-      SONAR_LOGIN: sqp_96384a4bc14d98fb7df2d324be5d601f86fcb461 
+      SONAR_LOGIN: sqp_96384a4bc14d98fb7df2d324be5d601f86fcb461
     commands:
       - sonar-scanner
 trigger:
