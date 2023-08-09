@@ -8,17 +8,13 @@ steps:
     image: node:14  # Specify the Docker image to use for this step
     commands:
       - npm install  # Example build commands
-  - name: perform code-analysis
-    image: kytay/sonar-node-plugin
+  - name: code-analysis
+    image: aosapps/drone-sonar-plugin
     settings:
         project-key: "test-mix"
         project-name: "test-mix"
-        language: "js"
-        project-version: 1.0
-        sonar.sources: .
         sonar.host.url: "https://sonarqube.tks.trueidc.com"
         sonar.login: "sqp_2e39c6a0ff4c84d2355d061debeca8b59ccd7244"
-        use_node_version: 16.18.1
 trigger:
   branch:
   - main
