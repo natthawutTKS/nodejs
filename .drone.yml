@@ -8,3 +8,9 @@ steps:
     image: node:14  # Specify the Docker image to use for this step
     commands:
       - npm install  # Example build commands
+
+trigger:
+  branch:
+  - master
+  event:
+  - push
