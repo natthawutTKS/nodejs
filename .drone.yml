@@ -5,17 +5,16 @@ name: default
 # Define the steps to be executed in the pipeline
 steps:
   - name: build
-    image: node:14  # Specify the Docker image to use for this step
+    image: node:14  
     commands:
-      - npm install  # Example build commands
-  - name: analyze
+      - npm install  
+  - name: sonarqube
     image: sonarsource/sonar-scanner-cli:latest
-    settings:
-      project-key: test-mix
-      sonar.sources: .
-      sonar.host.url: https://sonarqube.tks.trueidc.com
-      sonar.login:
-        from_secret: sqp_96384a4bc14d98fb7df2d324be5d601f86fcb461
+    environment:
+      SONAR_HOST_URL: https://sonarqube.tks.trueidc.com
+      SONAR_LOGIN: sqp_96384a4bc14d98fb7df2d324be5d601f86fcb461 
+    commands:
+      - sonar-scanner
 trigger:
   branch:
   - main
