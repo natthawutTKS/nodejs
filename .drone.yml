@@ -5,9 +5,9 @@ name: default
 # Define the steps to be executed in the pipeline
 steps:
   - name: build
-    image: node:14
+    image: node:14  # Specify the Docker image to use for this step
     commands:
-      - npm install
+      - npm install  # Example build commands
 trigger:
   branch:
   - main
