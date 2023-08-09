@@ -12,12 +12,10 @@ steps:
     image: sonarsource/sonar-scanner-cli:latest
     settings:
       project-key: test-mix
-      project-name: test-mix
-      project-version: 1.0
       sonar.sources: .
       sonar.host.url: https://sonarqube.tks.trueidc.com
       sonar.login:
-        from_secret: sqp_d98c49e17419404d4459278ef092f09ed462f42d
+        from_secret: sqp_96384a4bc14d98fb7df2d324be5d601f86fcb461
 trigger:
   branch:
   - main
