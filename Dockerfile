@@ -14,10 +14,10 @@ RUN npm install
 COPY . .
 
 # Expose any necessary ports (e.g., for running a web server)
-# EXPOSE 8080
+EXPOSE 3000
 
 # Run your application or tests here (replace this with your command)
-# CMD [ "npm", "start" ]
+CMD [ "npm", "start" ]
 
 # Entry point for Cypress (use this when running Cypress tests)
-# CMD [ "npx", "cypress", "run" ]
+CMD [ "npx", "cypress", "run" ]
