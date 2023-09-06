@@ -7,7 +7,7 @@ steps:
     image: plugins/docker
       - pre-build
     settings:
-      repo: natthawutsae/go-app
+      repo: natthawutsae/node-app
       username:
         from_secret: docker_username
       password:
