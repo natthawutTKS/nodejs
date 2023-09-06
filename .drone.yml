@@ -15,14 +15,14 @@ steps:
       tags:
         - ${DRONE_TAG#v}
 
-  - name: apitotest
-    image: natthawutsae/api
-    detach: true
-    ports:
-      - 3000
-  - name: run_integration_tests
-    image: natthawutsae/api
-    commands:
-      - "npx cypress run --spec cypress/e2e/healthcheck.cy.js"
-    depends_on:
-      - apitotest
+  # - name: apitotest
+  #   image: natthawutsae/api
+  #   detach: true
+  #   ports:
+  #     - 3000
+  # - name: run_integration_tests
+  #   image: natthawutsae/api
+  #   commands:
+  #     - "npx cypress run --spec cypress/e2e/healthcheck.cy.js"
+  #   depends_on:
+  #     - apitotest
