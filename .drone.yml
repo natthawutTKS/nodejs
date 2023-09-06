@@ -3,10 +3,11 @@ type: kubernetes
 name: MyApp
 
 steps:
-  - name: API
+  - name: build-publish
     image: plugins/docker
+      - pre-build
     settings:
-      repo: natthawutsae/api
+      repo: natthawutsae/go-app
       username:
         from_secret: docker_username
       password:
