@@ -1,15 +1,96 @@
----
 kind: pipeline
 type: kubernetes
-name: test
-
+name: MyApp
+environment:
+   NODE_ENV: production
+   FRONT_URL: localhost
+   MONGODB_URI: mongodb://localhost/myapp
+   PORT: 3000
+   API_URL: localhost
+   
 steps:
-- name: backend
-  image: node
-  commands:
-  - npm install
-
-- name: frontend
-  image: node
-  commands:
-  - npm install
+  - name: API
+    image: plugins/docker
+    settings:
+      repo: natthawutsae/api
+      username:
+        from_secret: docker_username
+      password:
+        from_secret: docker_password
+      tags:
+        - ${DRONE_TAG#v}
+  - name: front
+    image: plugins/docker
+    settings:
+      repo: natthawutsae/front
+      username:
+        from_secret: docker_username
+      password:
+        from_secret: docker_password
+      tags:
+        - ${DRONE_TAG#v}
+ - name: mongodb
+   image: mongo:latest
+   detach: true
+   ports:
+     - 27017
+ - name: apitotest
+   image: docker.cogarius.com/myapp/api
+   detach: true
+   environment:
+     <<: *conf_test_api
+   ports:
+     - 3000
+   depends_on:
+     - mongodb
+ - name: run_integration_tests
+   image: docker.cogarius.com/myapp/api
+   commands:
+     - "cd /app"
+     - "npm run test:e2e"
+   environment:
+     <<: *conf_test_api
+   depends_on:
+     - apitotest
+ - name: deploy # deploy to kubernetes using a Helm chart
+   image: pelotech/drone-helm3
+   settings:
+     mode: upgrade
+     chart: ./charts/my-app
+     release: my-app-staging
+     namespace: my-app-staging
+     debug: true
+     kube_service_account: cicd
+     kube_api_server: "https://kube.mycompany.com:6443"
+     kube_token:
+       from_secret: kube_token
+     kube_certificate:
+       from_secret: kube_ca_certificate
+     values:
+       - "api.url=staging.api.myapp.mycompany.com"
+       - "front.url=staging.myapp.mycompany.com"
+     cleanup_failed_upgrade: true
+     force_upgrade: true
+   depends_on:
+     - api
+     - front
+     - run_integration_tests
+ - name: notification
+   image: appleboy/drone-telegram
+   settings:
+     token:
+       from_secret: telegram_token
+     to: "-558454548"
+     message: >
+       📝 {{repo.name}} / {{commit.branch}} - {{commit.message}}
+       {{#success build.status}}
+         ✅ succeeded  for 👷‍♂️ build {{build.number}}
+       {{else}}
+         🛑 failed for 👷‍♂️ build {{build.number}}
+       {{/success}}
+   when:
+     status:
+       - failure
+       - success
+   depends_on:
+     - deploy
