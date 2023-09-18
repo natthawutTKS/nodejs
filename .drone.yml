@@ -3,17 +3,16 @@ type: kubernetes
 name: MyApp
 
 steps:
-  - name: step-1
+  - name: write
     image: alpine
     commands:
-      - echo "Hello, World!" > output.txt
-    artifacts:
-      - path: output.txt
+      - echo "username=mix" > username
 
-  - name: step-2
+  - name: read
     image: alpine
     commands:
-      - cat output.txt
+      - source username
+      - echo $$username
 
   # - name: apitotest
   #   image: natthawutsae/api
