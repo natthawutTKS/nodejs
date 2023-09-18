@@ -7,7 +7,7 @@ steps:
     image: alpine
     commands:
       - MY_VARIABLE="Hello, World!"
-      - echo "Value of MY_VARIABLE is: $MY_VARIABLE"
+      - echo "Value of MY_VARIABLE is"
   # - name: use-variable
   #   image: alpine
   #   commands:
