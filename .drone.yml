@@ -8,10 +8,10 @@ steps:
     commands:
       - MY_VARIABLE="Hello, World!"
       - echo "Value of MY_VARIABLE is: $MY_VARIABLE"
-  - name: use-variable
-    image: alpine
-    commands:
-      - echo "Value of MY_VARIABLE in another step is: $MY_VARIABLE"
+  # - name: use-variable
+  #   image: alpine
+  #   commands:
+  #     - echo "Value of MY_VARIABLE in another step is: $MY_VARIABLE"
 
   # - name: apitotest
   #   image: natthawutsae/api
