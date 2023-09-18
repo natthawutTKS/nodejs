@@ -14,14 +14,19 @@ steps:
       - source username
       - echo $$username
 
-  # - name: apitotest
-  #   image: natthawutsae/api
-  #   detach: true
-  #   ports:
-  #     - 3000
-  # - name: run_integration_tests
-  #   image: natthawutsae/api
-  #   commands:
-  #     - "npx cypress run --spec cypress/e2e/healthcheck.cy.js"
-  #   depends_on:
-  #     - apitotest
+---
+kind: pipeline
+type: kubernetes
+name: default
+
+steps:
+- name: build
+  image: alpine
+  environment:
+    USERNAME:
+      from_secret: username
+
+---
+kind: secret
+name: username
+data: hl3v+FODjduX0UpXBHgYzPzVTppQblg51CVgCbgDk4U=
