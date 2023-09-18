@@ -3,17 +3,15 @@ type: kubernetes
 name: MyApp
 
 steps:
-  - name: build-publish
-    image: plugins/docker
-      - pre-build
-    settings:
-      repo: natthawutsae/node-app
-      username:
-        from_secret: docker_username
-      password:
-        from_secret: docker_password
-      tags:
-        - ${DRONE_TAG#v}
+  - name: set-variable
+    image: alpine
+    commands:
+      - MY_VARIABLE="Hello, World!"
+      - echo "Value of MY_VARIABLE is: $MY_VARIABLE"
+  - name: use-variable
+    image: alpine
+    commands:
+      - echo "Value of MY_VARIABLE in another step is: $MY_VARIABLE"
 
   # - name: apitotest
   #   image: natthawutsae/api
