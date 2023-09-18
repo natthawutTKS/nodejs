@@ -3,15 +3,17 @@ type: kubernetes
 name: MyApp
 
 steps:
-  - name: set-variable
+  - name: step-1
     image: alpine
     commands:
-      - MY_VARIABLE="Hello, World!"
-      - echo "Value of MY_VARIABLE is"
-  # - name: use-variable
-  #   image: alpine
-  #   commands:
-  #     - echo "Value of MY_VARIABLE in another step is: $MY_VARIABLE"
+      - echo "Hello, World!" > output.txt
+    artifacts:
+      - path: output.txt
+
+  - name: step-2
+    image: alpine
+    commands:
+      - cat output.txt
 
   # - name: apitotest
   #   image: natthawutsae/api
