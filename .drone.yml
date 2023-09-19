@@ -17,6 +17,7 @@ steps:
         from_secret: docker_password
     commands:
       - source username
+      - echo $username 
       - echo $$username 
       - echo $$USERNAME 
       - echo $docker_username
