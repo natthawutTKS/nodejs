@@ -27,6 +27,31 @@ steps:
       from_secret: username
 
 ---
+kind: pipeline
+name: secret-docker
+
+steps:
+- name: build
+  image: alpine
+  environment:
+    USERNAME:
+      from_secret: username
+    PASSWORD:
+      from_secret: password
+  commands:
+    - echo $$USERNAME
+    - echo $$PASSWORD
+
+---
 kind: secret
 name: username
-data: hl3v+FODjduX0UpXBHgYzPzVTppQblg51CVgCbgDk4U=
+get:
+  path: docker
+  name: username
+
+---
+kind: secret
+name: password
+get:
+  path: docker
+  name: password
