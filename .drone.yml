@@ -35,12 +35,12 @@ steps:
 kind: secret
 name: docker_username
 get:
-  path: docker
+  path: docker-drone
   name: username
   
 ---
 kind: secret
 name: docker_password
 get:
-  path: docker
+  path: docker-drone
   name: password
