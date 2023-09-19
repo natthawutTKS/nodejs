@@ -6,7 +6,7 @@ steps:
   - name: write
     image: alpine
     commands:
-      - echo "username=mix" > natthawut
+      - echo "username=mix" > username
 
   - name: read
     image: alpine
