@@ -11,7 +11,6 @@ steps:
   - name: read
     image: alpine
     environment:
-      TEST: natthawut
       USERNAME:
         from_secret: docker_username
       PASSWORD:
@@ -20,8 +19,9 @@ steps:
       - source username
       - echo $$username 
       - echo $$USERNAME 
-      - echo $$TEST
-
+      - echo $docker_username
+      - echo $$docker_username
+      
 ---
 kind: pipeline
 type: kubernetes
