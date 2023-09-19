@@ -1,32 +1,32 @@
-kind: pipeline
-type: kubernetes
-name: MyApp
+# kind: pipeline
+# type: kubernetes
+# name: MyApp
 
-steps:
-  - name: write
-    image: alpine
-    commands:
-      - echo "username=mix" > username
+# steps:
+#   - name: write
+#     image: alpine
+#     commands:
+#       - echo "username=mix" > username
 
-  - name: read
-    image: alpine
-    commands:
-      - source username
-      - echo $$username
+#   - name: read
+#     image: alpine
+#     commands:
+#       - source username
+#       - echo $$username
 
----
-kind: pipeline
-type: kubernetes
-name: default
+# ---
+# kind: pipeline
+# type: kubernetes
+# name: default
 
-steps:
-- name: build
-  image: alpine
-  environment:
-    USERNAME:
-      from_secret: username
+# steps:
+# - name: build
+#   image: alpine
+#   environment:
+#     USERNAME:
+#       from_secret: username
 
----
+# ---
 kind: pipeline
 name: secret-docker
 
