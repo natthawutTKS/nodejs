@@ -17,8 +17,8 @@ steps:
         from_secret: docker_password
     commands:
       - source username
-      - echo $$username $username
-      - echo $$USERNAME $USERNAME
+      - echo $$username 
+      - echo $$USERNAME 
 
 ---
 kind: pipeline
