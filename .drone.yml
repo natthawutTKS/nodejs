@@ -28,7 +28,7 @@ steps:
     PASSWORD:
       from_secret: docker_password
   commands:
-    - docker login -u $USERNAME -p $PASSWORD
+    - docker login -u "$USERNAME" -p "$PASSWORD"
 
 ---
 kind: secret
@@ -38,8 +38,8 @@ get:
   name: username
   
 ---
-kind: docker-login
+kind: secret
 name: docker_password
 get:
-  path: docker
+  path: docker-login
   name: password
