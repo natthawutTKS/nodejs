@@ -10,44 +10,35 @@ steps:
 
   - name: read
     image: alpine
-    environment:
-      USERNAME:
-        from_secret: docker_username
-      PASSWORD:
-        from_secret: docker_password
     commands:
       - source username
       - echo $$username 
-      - echo $$USERNAME 
-      - echo $docker_username
-      - echo $$docker_username
       
 ---
 kind: pipeline
 type: kubernetes
-name: default
+name: docker
 
 steps:
 - name: build
-  image: alpine
+  image: docker
   environment:
     USERNAME:
       from_secret: docker_username
     PASSWORD:
       from_secret: docker_password
   commands:
-    - echo $$USERNAME
-    - echo $PASSWORD
+    - docker login -u "$USERNAME" -p "$PASSWORD"
 
 ---
 kind: secret
 name: docker_username
 get:
-  path: docker
+  path: docker-login
   name: username
   
 ---
-kind: secret
+kind: docker-login
 name: docker_password
 get:
   path: docker
