@@ -28,7 +28,7 @@ steps:
     PASSWORD:
       from_secret: docker_password
   commands:
-    - docker login -u "natthawutsae" -p "#Sangngoen7"
+    - docker login -u $USERNAME -p "#Sangngoen7"
 
 ---
 kind: secret
