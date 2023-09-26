@@ -28,7 +28,7 @@ steps:
     DOCKER_PASSWORD:
       from_secret: docker_password
   commands:
-    - echo "natthawut2023" | docker login -u "natthawuttks" --password-stdin
+    - echo "natthawut2023" | docker login -u "$DOCKER_USERNAME" --password-stdin
 
 ---
 kind: secret
