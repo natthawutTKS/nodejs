@@ -1,21 +1,5 @@
 kind: pipeline
 type: kubernetes
-name: MyApp
-
-steps:
-  - name: write
-    image: alpine
-    commands:
-      - echo "username=mix" > username
-
-  - name: read
-    image: alpine
-    commands:
-      - source username
-      - echo $$username 
----
-kind: pipeline
-type: kubernetes
 name: default
 
 steps:
@@ -27,7 +11,7 @@ steps:
     PASSWORD:
       from_secret: password
   commands:
-    - docker login -u $USERNAME -p $PASSWORD
+    - echo $PASSWORD | docker login -u $USERNAME --password-stdin
 
 ---
 kind: secret
