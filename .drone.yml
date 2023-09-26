@@ -17,7 +17,7 @@ steps:
 ---
 kind: pipeline
 type: kubernetes
-name: docker
+name: docker-login
 
 steps:
 - name: build
@@ -28,7 +28,7 @@ steps:
     DOCKER_PASSWORD:
       from_secret: docker_password
   commands:
-    - docker login -u $DOCKER_USERNAME -p "natthawut2023"
+    - docker login -u "$DOCKER_USERNAME" -p "natthawut2023"
 
 ---
 kind: secret
