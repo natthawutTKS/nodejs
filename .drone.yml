@@ -23,18 +23,10 @@ steps:
 - name: docker-login
   image: alpine
   environment:
-    DOCKER_USERNAME:
-      from_secret: docker_username
-    DOCKER_PASSWORD:
-      from_secret: docker_password
+    DOCKER_CONFIG: /root/.docker
   commands:
-    - apk add --no-cache expect
-    - echo "spawn docker login -u $DOCKER_USERNAME --password-stdin" > login.exp
-    - echo "expect \Password: \" >> login.exp
-    - echo "send \"$DOCKER_PASSWORD\\r\"" >> login.exp
-    - echo "expect eof" >> login.exp
-    - chmod +x login.exp
-    - ./login.exp
+    - mkdir -p /root/.docker
+    - echo "{\"auths\":{\"https://index.docker.io/v1/\":{\"auth\":\"$(echo -n $DOCKER_USERNAME:$DOCKER_PASSWORD | base64)\"}}}" > /root/.docker/config.json
 
 ---
 kind: secret
