@@ -17,10 +17,10 @@ steps:
 ---
 kind: pipeline
 type: kubernetes
-name: docker-login
+name: docker
 
 steps:
-- name: build
+- name: docker-login
   image: docker
   environment:
     DOCKER_USERNAME:
