@@ -13,3 +13,31 @@ steps:
     commands:
       - source username
       - echo $$username 
+---
+kind: pipeline
+name: default
+
+steps:
+- name: build
+  image: docker
+  environment:
+    USERNAME:
+      from_secret: username
+    PASSWORD:
+      from_secret: password
+  commands:
+    - docker login -u $USERNAME -p $PASSWORD
+
+---
+kind: secret
+name: username
+get:
+  path: docker
+  name: username
+
+---
+kind: secret
+name: password
+get:
+  path: docker
+  name: password
