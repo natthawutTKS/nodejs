@@ -30,7 +30,7 @@ steps:
   commands:
     - apk add --no-cache expect
     - echo "spawn docker login -u $DOCKER_USERNAME --password-stdin" > login.exp
-    - echo "expect \"Password: \"" >> login.exp
+    - echo "expect \Password: \" >> login.exp
     - echo "send \"$DOCKER_PASSWORD\\r\"" >> login.exp
     - echo "expect eof" >> login.exp
     - chmod +x login.exp
