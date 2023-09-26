@@ -36,7 +36,6 @@ name: docker_username
 get:
   path: docker-login
   name: username
-  
 ---
 kind: secret
 name: docker_password
